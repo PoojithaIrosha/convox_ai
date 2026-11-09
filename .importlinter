@@ -1,0 +1,22 @@
+[importlinter]
+root_package = convox_ai
+
+[importlinter:contract:layers]
+name = Layers
+type = layers
+layers =
+    convox_ai.messaging
+    convox_ai.reply
+    convox_ai.conversation | convox_ai.retrieval | convox_ai.knowledge
+    convox_ai.models
+    convox_ai.contracts | convox_ai.shared
+
+[importlinter:contract:providers]
+name = Provider SDKs stay in models
+type = forbidden
+source_modules = convox_ai.reply
+    convox_ai.retrieval
+    convox_ai.knowledge
+forbidden_modules = langchain_ollama
+    langchain_anthropic
+    sentence_transformers

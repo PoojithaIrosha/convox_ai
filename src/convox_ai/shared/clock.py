@@ -1,0 +1,30 @@
+"""The current time, injected instead of calling datetime.now() directly.
+
+Production code receives a SystemClock. Tests pass a FixedClock and move it forward
+by hand, so time-dependent logic (summaries, timeouts, ages) is testable.
+"""
+
+from datetime import UTC, datetime, timedelta
+from typing import Protocol
+
+
+class Clock(Protocol):
+    def now(self) -> datetime: ...
+
+
+class SystemClock:
+    def now(self) -> datetime:
+        return datetime.now(UTC)
+
+
+class FixedClock:
+    def __init__(self, at: datetime) -> None:
+        if at.tzinfo is None:
+            raise ValueError("FixedClock needs a timezone-aware datetime")
+        self._at = at
+
+    def now(self) -> datetime:
+        return self._at
+
+    def advance(self, seconds: float) -> None:
+        self._at += timedelta(seconds=seconds)

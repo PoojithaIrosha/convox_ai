@@ -1,0 +1,19 @@
+services:
+  kb-migrate:
+    image: flyway/flyway:latest
+    command: migrate
+    environment:
+      FLYWAY_URL: jdbc:postgresql://postgres:5432/convox
+      FLYWAY_USER: convox_ai_owner
+      FLYWAY_PASSWORD: ${CONVOX_AI_OWNER_PASSWORD}
+      FLYWAY_SCHEMAS: kb
+      FLYWAY_TABLE: flyway_schema_history_kb
+      FLYWAY_LOCATIONS: filesystem:/flyway/sql
+      FLYWAY_VALIDATE_MIGRATION_NAMING: "true"
+    volumes:
+      - ./migrations:/flyway/sql:ro
+    networks: [convox-local]
+
+networks:
+  convox-local:
+    external: true
