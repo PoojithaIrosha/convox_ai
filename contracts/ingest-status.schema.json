@@ -1,0 +1,90 @@
+{
+  "properties": {
+    "at": {
+      "format": "date-time",
+      "title": "At",
+      "type": "string"
+    },
+    "chunkCount": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Chunkcount"
+    },
+    "documentId": {
+      "format": "uuid",
+      "title": "Documentid",
+      "type": "string"
+    },
+    "errorCode": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Errorcode"
+    },
+    "organizationId": {
+      "format": "uuid",
+      "title": "Organizationid",
+      "type": "string"
+    },
+    "pageCount": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Pagecount"
+    },
+    "sectionCount": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Sectioncount"
+    },
+    "status": {
+      "enum": [
+        "PROCESSING",
+        "READY",
+        "FAILED",
+        "DELETED"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "version": {
+      "title": "Version",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "documentId",
+    "organizationId",
+    "version",
+    "status",
+    "at"
+  ],
+  "title": "IngestStatus",
+  "type": "object"
+}

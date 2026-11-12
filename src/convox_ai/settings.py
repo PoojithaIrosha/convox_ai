@@ -36,6 +36,7 @@ class Settings(BaseSettings):
     s3_access_key: SecretStr
     s3_secret_key: SecretStr
     anthropic_api_key: SecretStr | None = None
+    openai_api_key: SecretStr | None = None
     langfuse_public_key: str | None = None
     langfuse_secret_key: SecretStr | None = None
     models: ModelSettings = ModelSettings()

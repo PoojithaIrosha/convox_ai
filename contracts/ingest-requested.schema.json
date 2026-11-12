@@ -1,0 +1,107 @@
+{
+  "properties": {
+    "action": {
+      "enum": [
+        "INDEX",
+        "DELETE"
+      ],
+      "title": "Action",
+      "type": "string"
+    },
+    "contentType": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Contenttype"
+    },
+    "documentId": {
+      "format": "uuid",
+      "title": "Documentid",
+      "type": "string"
+    },
+    "fileName": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Filename"
+    },
+    "organizationId": {
+      "format": "uuid",
+      "title": "Organizationid",
+      "type": "string"
+    },
+    "requestedAt": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Requestedat"
+    },
+    "sha256": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Sha256"
+    },
+    "storageKey": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Storagekey"
+    },
+    "title": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Title"
+    },
+    "version": {
+      "title": "Version",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "action",
+    "documentId",
+    "organizationId",
+    "version"
+  ],
+  "title": "IngestRequested",
+  "type": "object"
+}

@@ -1,0 +1,246 @@
+{
+  "$defs": {
+    "Citation": {
+      "properties": {
+        "documentId": {
+          "format": "uuid",
+          "title": "Documentid",
+          "type": "string"
+        },
+        "headingPath": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Headingpath",
+          "type": "array"
+        },
+        "score": {
+          "title": "Score",
+          "type": "number"
+        },
+        "sectionId": {
+          "format": "uuid",
+          "title": "Sectionid",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "sectionId",
+        "documentId",
+        "title",
+        "headingPath",
+        "score"
+      ],
+      "title": "Citation",
+      "type": "object"
+    },
+    "Diagnostics": {
+      "properties": {
+        "inputTokens": {
+          "title": "Inputtokens",
+          "type": "integer"
+        },
+        "latencyMs": {
+          "title": "Latencyms",
+          "type": "integer"
+        },
+        "outputTokens": {
+          "title": "Outputtokens",
+          "type": "integer"
+        },
+        "promptVersion": {
+          "title": "Promptversion",
+          "type": "string"
+        },
+        "replyModel": {
+          "title": "Replymodel",
+          "type": "string"
+        },
+        "topScore": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Topscore"
+        }
+      },
+      "required": [
+        "topScore",
+        "replyModel",
+        "promptVersion",
+        "inputTokens",
+        "outputTokens",
+        "latencyMs"
+      ],
+      "title": "Diagnostics",
+      "type": "object"
+    },
+    "Summary": {
+      "properties": {
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "upToMessageId": {
+          "format": "uuid",
+          "title": "Uptomessageid",
+          "type": "string"
+        }
+      },
+      "required": [
+        "text",
+        "upToMessageId"
+      ],
+      "title": "Summary",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "basedOnMessageId": {
+      "anyOf": [
+        {
+          "format": "uuid",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Basedonmessageid"
+    },
+    "citations": {
+      "items": {
+        "$ref": "#/$defs/Citation"
+      },
+      "title": "Citations",
+      "type": "array"
+    },
+    "conversationId": {
+      "anyOf": [
+        {
+          "format": "uuid",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Conversationid"
+    },
+    "decision": {
+      "enum": [
+        "ANSWER",
+        "HANDOFF",
+        "NO_REPLY"
+      ],
+      "title": "Decision",
+      "type": "string"
+    },
+    "diagnostics": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Diagnostics"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "errorCode": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Errorcode"
+    },
+    "handoffReason": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Handoffreason"
+    },
+    "language": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Language"
+    },
+    "organizationId": {
+      "format": "uuid",
+      "title": "Organizationid",
+      "type": "string"
+    },
+    "reply": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Reply"
+    },
+    "runId": {
+      "format": "uuid",
+      "title": "Runid",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "COMPLETED",
+        "FAILED"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "summary": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Summary"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    }
+  },
+  "required": [
+    "runId",
+    "organizationId",
+    "conversationId",
+    "basedOnMessageId",
+    "status",
+    "decision"
+  ],
+  "title": "ReplyResult",
+  "type": "object"
+}

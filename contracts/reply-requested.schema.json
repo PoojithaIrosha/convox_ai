@@ -1,0 +1,216 @@
+{
+  "$defs": {
+    "AssistantConfig": {
+      "properties": {
+        "businessName": {
+          "title": "Businessname",
+          "type": "string"
+        },
+        "defaultLanguage": {
+          "default": "en",
+          "title": "Defaultlanguage",
+          "type": "string"
+        },
+        "instructions": {
+          "default": "",
+          "maxLength": 4000,
+          "title": "Instructions",
+          "type": "string"
+        },
+        "maxReplyChars": {
+          "default": 1000,
+          "exclusiveMinimum": 0,
+          "title": "Maxreplychars",
+          "type": "integer"
+        },
+        "minRetrievalScore": {
+          "default": 0.5,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Minretrievalscore",
+          "type": "number"
+        }
+      },
+      "required": [
+        "businessName"
+      ],
+      "title": "AssistantConfig",
+      "type": "object"
+    },
+    "Author": {
+      "enum": [
+        "CONTACT",
+        "AGENT",
+        "ASSISTANT",
+        "EXTERNAL"
+      ],
+      "title": "Author",
+      "type": "string"
+    },
+    "Summary": {
+      "properties": {
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "upToMessageId": {
+          "format": "uuid",
+          "title": "Uptomessageid",
+          "type": "string"
+        }
+      },
+      "required": [
+        "text",
+        "upToMessageId"
+      ],
+      "title": "Summary",
+      "type": "object"
+    },
+    "TranscriptMessage": {
+      "properties": {
+        "at": {
+          "format": "date-time",
+          "title": "At",
+          "type": "string"
+        },
+        "author": {
+          "$ref": "#/$defs/Author"
+        },
+        "id": {
+          "format": "uuid",
+          "title": "Id",
+          "type": "string"
+        },
+        "text": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Text"
+        },
+        "type": {
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "at",
+        "author",
+        "type"
+      ],
+      "title": "TranscriptMessage",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "basedOnMessageId": {
+      "anyOf": [
+        {
+          "format": "uuid",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Basedonmessageid"
+    },
+    "channel": {
+      "enum": [
+        "WHATSAPP",
+        "MESSENGER",
+        "INSTAGRAM"
+      ],
+      "title": "Channel",
+      "type": "string"
+    },
+    "config": {
+      "$ref": "#/$defs/AssistantConfig"
+    },
+    "contactName": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Contactname"
+    },
+    "conversationId": {
+      "anyOf": [
+        {
+          "format": "uuid",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Conversationid"
+    },
+    "messages": {
+      "items": {
+        "$ref": "#/$defs/TranscriptMessage"
+      },
+      "maxItems": 60,
+      "title": "Messages",
+      "type": "array"
+    },
+    "organizationId": {
+      "format": "uuid",
+      "title": "Organizationid",
+      "type": "string"
+    },
+    "purpose": {
+      "enum": [
+        "CONVERSATION",
+        "PREVIEW"
+      ],
+      "title": "Purpose",
+      "type": "string"
+    },
+    "requestedAt": {
+      "format": "date-time",
+      "title": "Requestedat",
+      "type": "string"
+    },
+    "runId": {
+      "format": "uuid",
+      "title": "Runid",
+      "type": "string"
+    },
+    "summary": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Summary"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    }
+  },
+  "required": [
+    "runId",
+    "organizationId",
+    "conversationId",
+    "purpose",
+    "channel",
+    "basedOnMessageId",
+    "requestedAt",
+    "config",
+    "messages"
+  ],
+  "title": "ReplyRequested",
+  "type": "object"
+}

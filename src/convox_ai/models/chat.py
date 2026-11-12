@@ -4,6 +4,7 @@ from langchain_core.language_models import BaseChatModel
 
 from convox_ai.settings import Settings
 
+
 def parse_spec(spec: str) -> tuple[str, str]:
     """'ollama:qwen3.5:9b' -> ('ollama', 'qwen3.5:9b'). Only the first ':' separates."""
     provider, sep, name = spec.partition(":")
@@ -24,7 +25,7 @@ def build_chat_model(spec: str, settings: Settings) -> BaseChatModel:
             temperature=m.temperature,
             num_predict=m.max_output_tokens,
             reasoning=m.ollama_reasoning,
-            keep_alive="30m",  # keep the model loaded between requests
+            keep_alive="30m",
             client_kwargs={"timeout": m.request_timeout_s},
         )
 
@@ -32,24 +33,36 @@ def build_chat_model(spec: str, settings: Settings) -> BaseChatModel:
         from langchain_anthropic import ChatAnthropic
 
         if settings.anthropic_api_key is None:
-            raise ValueError("CONVOX_AI_ANTHROPIC_API_KEY is required for anthropic models")
+            raise ValueError("anthropic_api_key must be provided")
         return ChatAnthropic(
             model=name,
             anthropic_api_key=settings.anthropic_api_key,
             temperature=m.temperature,
             max_tokens=m.max_output_tokens,
             default_request_timeout=m.request_timeout_s,
-            max_retries=2,
+            max_retries=2
+        )
+
+    if provider == 'openai':
+        from langchain_openai import ChatOpenAI
+
+        if settings.openai_api_key is None:
+            raise ValueError("openai_api_key must be provided")
+        return ChatOpenAI(
+            model=name,
+            api_key=settings.openai_api_key,
+            temperature=m.temperature,
+            max_tokens=m.max_output_tokens,
+            timeout=m.request_timeout_s,
+            max_retries=2
         )
 
     raise ValueError(f"unknown model provider {provider!r} in {spec!r}")
 
-
 @dataclass(frozen=True)
 class ChatModels:
-    fast: BaseChatModel  # query rewriting, flags, summaries
-    reply: BaseChatModel  # writing the answer
-
+    fast: BaseChatModel
+    reply: BaseChatModel
 
 def build_chat_models(settings: Settings) -> ChatModels:
     return ChatModels(
