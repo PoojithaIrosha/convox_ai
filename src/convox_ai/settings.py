@@ -12,6 +12,7 @@ class ModelSettings(BaseModel):
     fast: str = "ollama:qwen3.5:9b"
     embedding: str = "BAAI/bge-m3"
     reranker: str = "BAAI/bge-reranker-v2-m3"
+    vision: str | None = None
     ollama_base_url: str = "http://localhost:11434"
     ollama_reasoning: bool | None = False
     request_timeout_s: float = 60
@@ -33,6 +34,7 @@ class Settings(BaseSettings):
     kafka_bootstrap: str
     s3_endpoint: str | None = None
     s3_bucket: str
+    s3_region: str = "us-east-1"
     s3_access_key: SecretStr
     s3_secret_key: SecretStr
     anthropic_api_key: SecretStr | None = None
@@ -42,6 +44,8 @@ class Settings(BaseSettings):
     models: ModelSettings = ModelSettings()
     reply_concurrency: int = 8
     ingest_max_file_mb: int = 25
+    ingest_max_pages: int = 300
+    ingest_timeout_s: float = 600
 
 
 @lru_cache(maxsize=1)

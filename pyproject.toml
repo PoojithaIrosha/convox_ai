@@ -53,7 +53,9 @@ markers = ['integration: needs Docker', 'eval: calls real models']
 
 [dependency-groups]
 dev = [
+    "boto3-stubs[s3]>=1.44.1",
     "import-linter>=2.16",
+    "moto[s3]>=5.2.5",
     "mypy>=2.4.1",
     "pytest>=9.2.0",
     "pytest-asyncio>=1.4.1.post1",
@@ -66,6 +68,10 @@ eval = [
 
 [tool.ruff.lint.per-file-ignores]
 'tests/**' = ['S101', 'S106', 'S311']   # tests may assert, use random and fake passwords
+
+[[tool.mypy.overrides]]
+module = ['docling_core.*']
+implicit_reexport = true   # docling_core re-exports its public classes without __all__
 
 [[tool.mypy.overrides]]
 module = ['tests.*']
